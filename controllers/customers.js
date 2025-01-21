@@ -1,5 +1,4 @@
-const Joi = require('joi');
-const Customer = require('../models/customer.js');
+const { Customer, validate } = require('../models/customer.js');
 
 const getAllCustomers = async (req, res) => {
   const customers = await Customer.find();
@@ -8,7 +7,7 @@ const getAllCustomers = async (req, res) => {
 };
 
 const createCustomer = async (req, res) => {
-  const { error } = customerValidate(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(404).json(error.details[0].message);
 
   let customer = new Customer({
@@ -29,7 +28,7 @@ const getCustomer = async (req, res) => {
   res.status(200).json(customer);
 };
 const updateCustomer = async (req, res) => {
-  const { error } = customerValidate(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).json(error.details[0].message);
 
   const customer = await Customer.findByIdAndUpdate(
@@ -54,16 +53,6 @@ const deleteCustomer = async (req, res) => {
 
   res.status(200).json(customer);
 };
-
-function customerValidate(customer) {
-  const customerSchema = Joi.object({
-    isGold: Joi.boolean(),
-    name: Joi.string().min(5).max(50).required(),
-    phone: Joi.string().min(5).max(10).required(),
-  });
-
-  return customerSchema.validate(customer);
-}
 
 module.exports = {
   getAllCustomers,

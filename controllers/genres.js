@@ -1,5 +1,4 @@
-const Genre = require('../models/Genre');
-const Joi = require('joi');
+const { Genre, validate } = require('../models/Genre');
 
 const getGenre = async (req, res) => {
   const genre = await Genre.findById(req.params.id);
@@ -17,7 +16,7 @@ const getAllGenres = async (req, res) => {
 };
 
 const createGenre = async (req, res) => {
-  const { error } = validateGenre(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).json(error.details[0].message);
 
   let genre = new Genre({ name: req.body.name });
@@ -35,7 +34,7 @@ const deleteGenre = async (req, res) => {
   res.status(200).json(genre);
 };
 const updateGenre = async (req, res) => {
-  const { error } = validateGenre(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).json(error.details[0].message);
 
   const genre = await Genre.findByIdAndUpdate(
@@ -48,14 +47,6 @@ const updateGenre = async (req, res) => {
 
   res.status(200).json(genre);
 };
-
-function validateGenre(genre) {
-  const schema = Joi.object({
-    name: Joi.string().min(5).required(),
-  });
-
-  return schema.validate(genre);
-}
 
 module.exports = {
   getGenre,

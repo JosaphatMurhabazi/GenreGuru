@@ -1,3 +1,6 @@
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
+
 const connectDB = require('./config/db');
 const express = require('express');
 const genres = require('./routes/genres');

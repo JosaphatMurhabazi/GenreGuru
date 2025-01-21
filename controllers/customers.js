@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { Customer, validate } = require('../models/customer.js');
 
 const getAllCustomers = async (req, res) => {
@@ -10,11 +11,7 @@ const createCustomer = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(404).json(error.details[0].message);
 
-  const customer = new Customer({
-    isGold: req.body.isGold,
-    name: req.body.name,
-    phone: req.body.phone,
-  });
+  const customer = new Customer(_.pick(req.body, ['isGold', 'name', 'phone']));
   await customer.save();
 
   res.status(201).json(customer);

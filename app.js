@@ -1,6 +1,7 @@
 const connectDB = require('./config/db');
 const express = require('express');
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
 const home = require('./routes/home');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 app.use('/', home);
 
 app.listen(PORT, () => {

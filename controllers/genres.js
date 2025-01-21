@@ -1,4 +1,4 @@
-const { Genre, validate } = require('../models/Genre');
+const { Genre, validate } = require('../models/genre');
 
 const getGenre = async (req, res) => {
   const genre = await Genre.findById(req.params.id);

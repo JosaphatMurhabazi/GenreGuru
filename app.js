@@ -1,6 +1,7 @@
 const connectDB = require('./config/db');
 const express = require('express');
 const genres = require('./routes/genres');
+const movies = require('./routes/movies');
 const customers = require('./routes/customers');
 const home = require('./routes/home');
 const dotenv = require('dotenv');
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
+app.use('/api/movies', movies);
 app.use('/', home);
 
 app.listen(PORT, () => {

@@ -10,12 +10,18 @@ const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const home = require('./routes/home');
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
+const config = require('config');
+
+if (!config.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+  process.exit(1);
+}
+
 connectDB();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = config.get('port') || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

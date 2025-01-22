@@ -1,0 +1,5 @@
+{
+  "jwtPrivateKey": "",
+  "mongo_uri": "",
+  "port": ""
+}

@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { User } = require('../models/user');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const loginUser = async (req, res) => {
   const { error } = validate(req.body);
@@ -12,7 +15,8 @@ const loginUser = async (req, res) => {
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).json('Invalid email or password.');
 
-  res.status(200).json(true);
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+  res.status(200).json(token);
 };
 
 function validate(req) {

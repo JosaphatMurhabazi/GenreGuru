@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const bcrypt = require('bcrypt');
 const { User, validate } = require('../models/user');
 
 const getUser = async (req, res) => {
@@ -24,6 +25,8 @@ const registerUser = async (req, res) => {
   if (user) return res.status(400).json('User already registered.');
 
   user = new User(_.pick(req.body, ['name', 'email', 'password']));
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
   res.status(201).json(_.pick(user, ['_id', 'name', 'email']));

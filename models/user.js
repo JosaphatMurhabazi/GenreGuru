@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
@@ -24,6 +25,18 @@ const userSchema = new mongoose.Schema({
     minLength: 5,
     maxLength: 1024,
   },
+});
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(err);
+  }
 });
 
 userSchema.methods.generateAuthToken = function () {

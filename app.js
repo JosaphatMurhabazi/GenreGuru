@@ -1,5 +1,6 @@
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
+const cookieParser = require('cookie-parser');
 
 const connectDB = require('./config/db');
 const express = require('express');
@@ -25,6 +26,7 @@ const PORT = config.get('port') || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);

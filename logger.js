@@ -6,7 +6,7 @@ const customFormat = printf(({ level, message, timestamp, stack }) => {
 });
 
 const logger = createLogger({
-  level: 'error',
+  level: 'info',
   format: combine(timestamp(), errors({ stack: true }), customFormat),
   transports: [
     new transports.Console(),

@@ -12,7 +12,9 @@ const loginUser = async (req, res) => {
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).json('Invalid email or password.');
+
   const token = user.generateAuthToken();
+  res.cookie('jwt', token, { httpOnly: true });
   res.status(200).json(token);
 };
 

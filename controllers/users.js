@@ -5,9 +5,6 @@ const { User, validate } = require('../models/user');
 const getUser = async (req, res) => {
   const user = await User.findById(req.user._id).select('-password -__v');
 
-  // if (!user)
-  //   return res.status(404).json('The user with the given id was not found');
-
   res.json(user);
 };
 

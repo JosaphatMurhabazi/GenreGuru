@@ -3,12 +3,12 @@ const bcrypt = require('bcrypt');
 const { User, validate } = require('../models/user');
 
 const getUser = async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.user._id).select('-password -__v');
 
-  if (!user)
-    return res.status(404).json('The user with the given id was not found');
+  // if (!user)
+  //   return res.status(404).json('The user with the given id was not found');
 
-  res.send(user);
+  res.json(user);
 };
 
 const getAllUsers = async (req, res) => {

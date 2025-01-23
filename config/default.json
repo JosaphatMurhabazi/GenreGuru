@@ -1,5 +1,6 @@
 {
   "jwtPrivateKey": "",
   "mongo_uri": "",
-  "port": ""
+  "port": "",
+  "node_env": ""
 }

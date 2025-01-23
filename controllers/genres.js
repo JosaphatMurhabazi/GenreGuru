@@ -1,28 +1,28 @@
 const { Genre, validate } = require('../models/genre');
 
+const getAllGenres = async (req, res) => {
+  const genres = await Genre.find().sort('name');
+
+  res.json(genres);
+};
+
+const createGenre = async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) res.status(400).json(error.details[0].message);
+
+  let genre = new Genre({ name: req.body.name });
+  genre = await genre.save();
+
+  res.status(200).json(genre);
+};
+
 const getGenre = async (req, res) => {
   const genre = await Genre.findById(req.params.id);
 
   if (!genre)
     return res.status(404).json('The genre with the given id was not found');
 
-  res.send(genre);
-};
-
-const getAllGenres = async (req, res) => {
-  const genres = await Genre.find().sort('name');
-
-  res.send(genres);
-};
-
-const createGenre = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json(error.details[0].message);
-
-  let genre = new Genre({ name: req.body.name });
-  genre = await genre.save();
-
-  res.status(200).json(genre);
+  res.json(genre);
 };
 
 const deleteGenre = async (req, res) => {

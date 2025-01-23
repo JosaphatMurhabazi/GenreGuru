@@ -1,6 +1,8 @@
+require('express-async-errors');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const cookieParser = require('cookie-parser');
+const error = require('./middleware/error');
 
 const connectDB = require('./config/db');
 const express = require('express');
@@ -34,6 +36,8 @@ app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/', home);
+
+app.use(error);
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

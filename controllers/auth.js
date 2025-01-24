@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const { User } = require('../models/user');
-require('dotenv').config();
 
 const loginUser = async (req, res) => {
   const { error } = validate(req.body);

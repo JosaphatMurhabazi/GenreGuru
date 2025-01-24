@@ -1,5 +1,4 @@
 const logger = require('../logger');
-require('dotenv').config();
 const config = require('config');
 
 module.exports = function (err, req, res, next) {

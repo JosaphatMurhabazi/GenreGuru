@@ -1,20 +1,14 @@
 require('express-async-errors');
-const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
-require('dotenv').config();
-const config = require('config');
+const logger = require('./logger');
 const express = require('express');
 const app = express();
-const PORT = config.get('port') || 3000;
 
-require('./startup/db')();
 require('./startup/routes')(app);
+require('./startup/db')();
+require('./startup/config')();
+require('./startup/validation')();
 
-if (!config.get('jwtPrivateKey')) {
-  console.error('FATAL ERROR: jwtPrivateKey is not defined.');
-  process.exit(1);
-}
-
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  logger.info(`Server started on port ${PORT}`);
 });

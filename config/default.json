@@ -2,5 +2,6 @@
   "jwtPrivateKey": "",
   "mongo_uri": "",
   "port": "",
-  "node_env": ""
+  "node_env": "",
+  "db": "mongodb://127.0.0.1:27017/vidly"
 }

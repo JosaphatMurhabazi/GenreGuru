@@ -2,5 +2,6 @@
   "jwtPrivateKey": "VIDLY_JWT_PRIVATE_KEY",
   "mongo_uri": "VIDLY_MONGO_URI",
   "port": "PORT",
-  "node_env": "NODE_ENV"
+  "node_env": "NODE_ENV",
+  "db": "DB"
 }

@@ -3,6 +3,7 @@ const config = require('config');
 const logger = require('../logger');
 
 module.exports = async function () {
-  await mongoose.connect(config.get('mongo_uri'));
-  logger.info('Connected to MongoDB...');
+  const db = config.get('db');
+  await mongoose.connect(db);
+  logger.info(`Connected to MongoDB...${config.get('db')}`);
 };

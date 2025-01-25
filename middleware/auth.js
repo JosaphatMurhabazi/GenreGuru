@@ -11,6 +11,6 @@ module.exports = function (req, res, next) {
     req.user = decoded;
     next();
   } catch (e) {
-    res.status(403).json('Invalid token.');
+    res.status(400).json('Invalid token.');
   }
 };

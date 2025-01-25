@@ -1,4 +1,5 @@
 const express = require('express');
+const validateObjectId = require('../middleware/validateObjectId');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const {
@@ -11,9 +12,9 @@ const {
 const router = express.Router();
 
 router.get('/', getAllGenres);
-router.get('/:id', getGenre);
+router.get('/:id', validateObjectId, getGenre);
 router.post('/', auth, createGenre);
-router.put('/:id', updateGenre);
-router.delete('/:id', [auth, admin], deleteGenre);
+router.put('/:id', validateObjectId, updateGenre);
+router.delete('/:id', [auth, admin], validateObjectId, deleteGenre);
 
 module.exports = router;

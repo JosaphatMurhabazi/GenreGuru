@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { Customer, validate } = require('../models/customer.js');
+const { Customer, customerValidate } = require('../models/customer.js');
 
 const getAllCustomers = async (req, res) => {
   const customers = await Customer.find();
@@ -8,9 +8,6 @@ const getAllCustomers = async (req, res) => {
 };
 
 const createCustomer = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(404).json(error.details[0].message);
-
   const customer = new Customer(_.pick(req.body, ['isGold', 'name', 'phone']));
   await customer.save();
 
@@ -25,9 +22,6 @@ const getCustomer = async (req, res) => {
   res.status(200).json(customer);
 };
 const updateCustomer = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json(error.details[0].message);
-
   const customer = await Customer.findByIdAndUpdate(
     { _id: req.params.id },
     {
@@ -57,4 +51,5 @@ module.exports = {
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  customerValidate,
 };

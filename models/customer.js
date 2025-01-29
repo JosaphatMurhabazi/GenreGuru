@@ -37,5 +37,5 @@ function customerValidate(customer) {
 
 module.exports = {
   Customer,
-  validate: customerValidate,
+  customerValidate,
 };

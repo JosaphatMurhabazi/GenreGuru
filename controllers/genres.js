@@ -1,4 +1,4 @@
-const { Genre, validate } = require('../models/genre');
+const { Genre, validateGenre } = require('../models/genre');
 
 const getAllGenres = async (req, res) => {
   const genres = await Genre.find().sort('name');
@@ -7,9 +7,6 @@ const getAllGenres = async (req, res) => {
 };
 
 const createGenre = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) res.status(400).json(error.details[0].message);
-
   let genre = new Genre({ name: req.body.name });
   genre = await genre.save();
 
@@ -34,9 +31,6 @@ const deleteGenre = async (req, res) => {
   res.status(200).json(genre);
 };
 const updateGenre = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json(error.details[0].message);
-
   const genre = await Genre.findByIdAndUpdate(
     req.params.id,
     { name: req.body.name },
@@ -54,4 +48,5 @@ module.exports = {
   createGenre,
   deleteGenre,
   updateGenre,
+  validateGenre,
 };
